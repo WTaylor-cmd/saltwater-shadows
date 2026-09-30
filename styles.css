@@ -12,21 +12,73 @@
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; background: var(--night); color: var(--foam); font-family: Georgia, "Times New Roman", serif; }
 button { font: inherit; cursor: pointer; }
+@font-face {
+  font-family: "Hotel Calligraphy";
+  src: url("fonts/exmouth_.ttf") format("truetype");
+  font-display: swap;
+}
 .hidden { display: none !important; }
 .screen { min-height: 100vh; }
-.title-screen { position: relative; overflow: hidden; display: grid; place-items: center; padding: 3rem 1.5rem; background: radial-gradient(ellipse at 48% 80%, #385668 0%, #182d3e 25%, #0b101c 68%); }
-.title-screen::before { content: ""; position: absolute; inset: 0; opacity: .38; background: linear-gradient(transparent 73%, #060a12 74%), repeating-linear-gradient(102deg, transparent 0 28px, #d7e4e3 29px 30px, transparent 31px 72px); animation: rain 1.4s linear infinite; }
+.title-screen {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 1.5rem;
+  background: radial-gradient(
+    ellipse at 48% 80%,
+    #385668 0%,
+    #182d3e 25%,
+    #0b101c 68%
+  );
+}
+.title-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.38;
+  background:
+    linear-gradient(transparent 73%, #060a12 74%),
+    repeating-linear-gradient(
+      102deg,
+      transparent 0 28px,
+      #d7e4e3 29px 30px,
+      transparent 31px 72px
+    );
+  animation: rain 1.4s linear infinite;
+}
 @keyframes rain { to { background-position: 0 0, 0 100px; } }
-.title-copy { position: relative; z-index: 1; max-width: 650px; text-align: center; }
-.eyebrow { margin: 0 0 .55rem; color: var(--gold); font-family: Arial, sans-serif; font-size: .69rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.title-copy {
+  position: absolute;
+  z-index: 1;
+  top: 2rem;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: min(650px, calc(100% - 3rem));
+  text-align: center;
+  transform: translateX(-50%);
+}
+.eyebrow {
+  margin: 0;
+  color: var(--gold);
+  font-family: "Snell Roundhand", cursive;
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 1.25rem; color: #f4e8cb; font-size: clamp(4rem, 13vw, 8rem); font-weight: 400; letter-spacing: -.07em; line-height: .75; text-shadow: 0 5px 25px #000; }
 h1 em { color: var(--gold); font-weight: normal; }
 .prologue { max-width: 480px; margin: 0 auto 2rem; color: #d6ddda; font-size: 1.13rem; line-height: 1.6; }
 .primary-button {
-  padding: 18px 40px;
-  font-size: 1.35rem;
-  font-weight: 700;
+  padding: .35rem .8rem;
+  font-family: "Hotel Calligraphy", cursive;
+  font-size: 2rem;
+  font-weight: 1000;
   color: #101827;
   background: linear-gradient(135deg, #ffd54a, #ff8a1f);
   border: 2px solid #fff3b0;
@@ -35,6 +87,7 @@ h1 em { color: var(--gold); font-weight: normal; }
               0 8px 20px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  line-height: 1;
 }
 
 .primary-button:hover {
@@ -45,6 +98,33 @@ h1 em { color: var(--gold); font-weight: normal; }
 
 .primary-button:active {
   transform: scale(1.02);
+}
+.primary-button, .ghost-button {
+  border: 1px solid var(--gold);
+  padding: .8rem 1.2rem;
+  color: #171622;
+  background: var(--gold);
+  font-weight: bold;
+  transition: .2s;
+}
+
+.primary-button:hover, .ghost-button:hover {
+  transform: translateY(-2px);
+  background: #f0cd8e;
+}
+
+.title-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.menu-button {
+  min-width: 150px;
+  padding: 0.35rem 0.8rem;
+  font-size: 1.25rem;
+  line-height: 1;
 }
 .controls { margin-top: 1rem; color: #adbbb9; font-size: .85rem; }
 .hotel-sign { position: absolute; right: 3%; bottom: 5%; color: #b38c54; font-size: .75rem; letter-spacing: .22em; line-height: 1.7; text-align: center; transform: rotate(-3deg); }
