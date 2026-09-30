@@ -27,7 +27,7 @@ h1 em { color: var(--gold); font-weight: normal; }
   padding: 18px 40px;
   font-size: 1.35rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #101827;
   background: linear-gradient(135deg, #ffd54a, #ff8a1f);
   border: 2px solid #fff3b0;
   border-radius: 999px;
@@ -50,7 +50,13 @@ h1 em { color: var(--gold); font-weight: normal; }
 .hotel-sign { position: absolute; right: 3%; bottom: 5%; color: #b38c54; font-size: .75rem; letter-spacing: .22em; line-height: 1.7; text-align: center; transform: rotate(-3deg); }
 .hotel-sign span { font-size: .57rem; }
 
-.game-screen { position: relative; max-width: 1400px; margin: auto; padding: 1.8rem clamp(1rem, 4vw, 4rem) 13rem; background: linear-gradient(145deg, #101827, #172b37 55%, #10151e); }
+.game-screen { position: relative;
+  max-width: 1400px;
+  margin: auto;
+  padding: 1.8rem clamp(1rem, 4vw, 4rem) 13rem;
+  background: linear-gradient(145deg, #101827, #172b37 55%, #10151e);
+}
+
 .topbar, .story-bar { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
 .topbar h2 { margin: 0; font-weight: normal; }
 .weather { color: var(--muted); font-size: .87rem; }
