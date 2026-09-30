@@ -221,11 +221,26 @@ function restart() {
   $("#title-screen").classList.remove("hidden");
 }
 
+function showCurrentScreen() {
+  const isInHotel = window.location.hash === "#hotel";
+
+  $("#title-screen").classList.toggle("hidden", isInHotel);
+  $("#game-screen").classList.toggle("hidden", !isInHotel);
+
+  if (isInHotel) {
+    renderRoom("lobby");
+    renderBoard();
+    renderSuspects();
+    renderAccusations();
+  }
+}
+
 $("#start-game").addEventListener("click", () => {
-  $("#title-screen").classList.add("hidden");
-  $("#game-screen").classList.remove("hidden");
-  renderRoom("lobby"); renderBoard(); renderSuspects(); renderAccusations();
+  window.location.hash = "hotel";
 });
+
+window.addEventListener("hashchange", showCurrentScreen);
+showCurrentScreen();
 $("#case-board-button").addEventListener("click", () => openOverlay("case-board"));
 document.querySelectorAll(".room").forEach((button) => button.addEventListener("click", () => renderRoom(button.dataset.room)));
 document.querySelectorAll("[data-close]").forEach((button) => button.addEventListener("click", () => closeOverlay(button.dataset.close)));
