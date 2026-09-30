@@ -23,8 +23,29 @@ h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 1.25rem; color: #f4e8cb; font-size: clamp(4rem, 13vw, 8rem); font-weight: 400; letter-spacing: -.07em; line-height: .75; text-shadow: 0 5px 25px #000; }
 h1 em { color: var(--gold); font-weight: normal; }
 .prologue { max-width: 480px; margin: 0 auto 2rem; color: #d6ddda; font-size: 1.13rem; line-height: 1.6; }
-.primary-button, .ghost-button { border: 1px solid var(--gold); padding: .8rem 1.2rem; color: #171622; background: var(--gold); font-weight: bold; transition: .2s; }
-.primary-button:hover, .ghost-button:hover { transform: translateY(-2px); background: #f0cd8e; }
+.primary-button {
+  padding: 18px 40px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffd54a, #ff8a1f);
+  border: 2px solid #fff3b0;
+  border-radius: 999px;
+  box-shadow: 0 0 18px rgba(255, 190, 60, 0.8),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary-button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 28px rgba(255, 210, 80, 1),
+              0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.primary-button:active {
+  transform: scale(1.02);
+}
 .controls { margin-top: 1rem; color: #adbbb9; font-size: .85rem; }
 .hotel-sign { position: absolute; right: 3%; bottom: 5%; color: #b38c54; font-size: .75rem; letter-spacing: .22em; line-height: 1.7; text-align: center; transform: rotate(-3deg); }
 .hotel-sign span { font-size: .57rem; }
