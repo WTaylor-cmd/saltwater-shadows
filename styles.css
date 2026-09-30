@@ -3,7 +3,7 @@
   --night: #0b101c;
   --sea: #173143;
   --foam: #ccd8d3;
-  --gold: #d4af72;
+  --gold: #C99535;
   --rust: #9b4d40;
   --paper: #e5d9bd;
   --muted: #82909a;
@@ -11,7 +11,7 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; background: var(--night); color: var(--foam); font-family: Georgia, "Times New Roman", serif; }
-button { font: inherit; cursor: pointer; }
+button { cursor: pointer; }
 @font-face {
   font-family: "Hotel Calligraphy";
   src: url("fonts/exmouth_.ttf") format("truetype");
@@ -71,17 +71,23 @@ button { font: inherit; cursor: pointer; }
   text-transform: uppercase;
 }
 h1, h2, h3, p { margin-top: 0; }
-h1 { margin-bottom: 1.25rem; color: #f4e8cb; font-size: clamp(4rem, 13vw, 8rem); font-weight: 400; letter-spacing: -.07em; line-height: .75; text-shadow: 0 5px 25px #000; }
-h1 em { color: var(--gold); font-weight: normal; }
+h1 { margin-bottom: 1.25rem;
+  color: #f4e8cb;
+  font-size: clamp(4rem, 13vw, 8rem);
+  font-weight: 400;
+  letter-spacing: -.07em;
+  line-height: .75;
+  text-shadow: 0 5px 25px #000; }
+h1 em { color: var(--gold); font-weight: ; }
 .prologue { max-width: 480px; margin: 0 auto 2rem; color: #d6ddda; font-size: 1.13rem; line-height: 1.6; }
 .primary-button {
-  padding: .35rem .8rem;
-  font-family: "Hotel Calligraphy", cursive;
+  font-family: "Centaur Now Display", Georgia, "Times New Roman", serif;
   font-size: 2rem;
-  font-weight: 1000;
+  font-weight: .1;
   color: #101827;
   background: linear-gradient(135deg, #ffd54a, #ff8a1f);
-  border: 2px solid #fff3b0;
+  border: 3px solid #fff3b0;
+  padding: .15rem .15rem;
   border-radius: 999px;
   box-shadow: 0 0 18px rgba(255, 190, 60, 0.8),
               0 8px 20px rgba(0, 0, 0, 0.3);
@@ -117,14 +123,16 @@ h1 em { color: var(--gold); font-weight: normal; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.65rem;
+  gap: 1.5rem;
 }
 
 .menu-button {
-  min-width: 150px;
-  padding: 0.35rem 0.8rem;
-  font-size: 1.25rem;
+  width: clamp(170px, 25vw, 280px);
+  min-height: 55px;
+  padding: 0.5rem 0.8rem;
+  font-size: 1.3rem;
   line-height: 1;
+  border-radius: 999px;
 }
 .controls { margin-top: 1rem; color: #adbbb9; font-size: .85rem; }
 .hotel-sign { position: absolute; right: 3%; bottom: 5%; color: #b38c54; font-size: .75rem; letter-spacing: .22em; line-height: 1.7; text-align: center; transform: rotate(-3deg); }
