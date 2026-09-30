@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Saltwater Shadows, a Victorian seaside hotel mystery."
+    />
+    <title>Saltwater Shadows</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="game">
+      <section id="title-screen" class="screen title-screen">
+        <div class="rain" aria-hidden="true"></div>
+        <div class="title-copy">
+          <p class="eyebrow">A mystery at the Grand Pelican Hotel</p>
+          <h1>Saltwater<br /><em>Shadows</em></h1>
+          <p class="prologue">
+            October, 1897. A storm seals the island away. At midnight, a guest
+            vanished from the locked Blue Room. Find the truth before the tide
+            returns.
+          </p>
+          <button id="start-game" class="primary-button">Enter the hotel</button>
+          <p class="controls">Click a room to explore · Collect evidence · Question the guests</p>
+        </div>
+        <p class="hotel-sign">THE GRAND PELICAN<br /><span>HOTEL &amp; BATHS</span></p>
+      </section>
+
+      <section id="game-screen" class="screen game-screen hidden">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Case 27 · October 1897</p>
+            <h2>Death at Low Tide</h2>
+          </div>
+          <div class="weather"><span>✦</span> Gale warning · 11:42 PM</div>
+        </header>
+
+        <section class="story-bar">
+          <p id="objective">Search the hotel. The murderer is still inside.</p>
+          <button id="case-board-button" class="ghost-button">Case board <span id="clue-count">0/5</span></button>
+        </section>
+
+        <section class="hotel-layout" aria-label="Grand Pelican Hotel map">
+          <button class="room room-lobby active" data-room="lobby">
+            <span class="room-number">01</span><strong>Grand Lobby</strong><small>Rain at the doors</small>
+          </button>
+          <button class="room room-salon" data-room="salon">
+            <span class="room-number">02</span><strong>Velvet Salon</strong><small>Cards &amp; confidences</small>
+          </button>
+          <button class="room room-stage" data-room="stage">
+            <span class="room-number">03</span><strong>Seaside Theatre</strong><small>Darkened stage</small>
+          </button>
+          <button class="room room-blue" data-room="blue">
+            <span class="room-number">04</span><strong>Blue Room</strong><small>Scene of the crime</small>
+          </button>
+          <button class="room room-cellar" data-room="cellar">
+            <span class="room-number">05</span><strong>Wine Cellar</strong><small>Below the sea wall</small>
+          </button>
+          <div class="map-label">THE GRAND PELICAN</div>
+        </section>
+
+        <section class="room-panel">
+          <div class="room-heading">
+            <p id="room-kicker" class="eyebrow">01 · Ground floor</p>
+            <h3 id="room-title">Grand Lobby</h3>
+          </div>
+          <p id="room-description"></p>
+          <div id="room-actions" class="action-list"></div>
+        </section>
+
+        <aside class="suspect-dock">
+          <p class="eyebrow">Persons of interest</p>
+          <div id="suspect-list" class="suspect-list"></div>
+        </aside>
+      </section>
+
+      <section id="case-board" class="overlay hidden" aria-modal="true" role="dialog">
+        <div class="board">
+          <button class="close-button" data-close="case-board" aria-label="Close case board">×</button>
+          <p class="eyebrow">Detective's portfolio</p>
+          <h2>Case board</h2>
+          <div class="board-grid">
+            <section>
+              <h3>Collected evidence</h3>
+              <div id="clue-list" class="clue-list"></div>
+            </section>
+            <section class="theory">
+              <h3>Working theory</h3>
+              <p id="theory-text">The killer's trail has not yet emerged from the storm.</p>
+              <div class="progress-track"><span id="progress-fill"></span></div>
+              <p id="progress-text" class="muted">0 of 5 key clues recovered</p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="interrogation" class="overlay hidden" aria-modal="true" role="dialog">
+        <div class="interrogation-card">
+          <button class="close-button" data-close="interrogation" aria-label="Close interrogation">×</button>
+          <p id="interrogation-role" class="eyebrow"></p>
+          <h2 id="interrogation-name"></h2>
+          <p id="interrogation-portrait" class="portrait-mark" aria-hidden="true"></p>
+          <div id="dialogue" class="dialogue"></div>
+          <div id="question-list" class="question-list"></div>
+        </div>
+      </section>
+
+      <section id="accusation" class="overlay hidden" aria-modal="true" role="dialog">
+        <div class="accusation-card">
+          <button class="close-button" data-close="accusation" aria-label="Close accusation">×</button>
+          <p class="eyebrow">The last question</p>
+          <h2>Who killed Edmund Vale?</h2>
+          <p>Make your accusation only when the evidence can bear its weight.</p>
+          <div id="accusation-options" class="accusation-options"></div>
+        </div>
+      </section>
+
+      <section id="ending" class="overlay hidden" aria-modal="true" role="dialog">
+        <div class="ending-card">
+          <p class="eyebrow">Case closed</p>
+          <h2 id="ending-title"></h2>
+          <p id="ending-copy"></p>
+          <button id="restart-game" class="primary-button">Return to the storm</button>
+        </div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
