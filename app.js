@@ -1,3 +1,79 @@
+const prologueSlides = [
+  {
+    image: "assets/prologue/01-forest-road.jpg",
+    alt: "A car traveling along a forest road at dusk.",
+    text: "By the time the road left the last town behind, evening had already settled in.",
+  },
+  {
+    image: "assets/prologue/02-darkening-trees.jpg",
+    alt: "Headlights cutting through dense trees in the dark.",
+    text: "The forest closed around the road, and the miles began to lose their meaning.",
+  },
+  {
+    image: "assets/prologue/03-estate-sign.jpg",
+    alt: "An old sign marking the entrance to a private estate.",
+    text: "When the light finally failed, an unfamiliar name appeared through the rain.",
+  },
+  {
+    image: "assets/prologue/04-front-gate.jpg",
+    alt: "A rusted gate at the entrance to an abandoned estate.",
+    text: "The road ended at a gate that had not opened for anyone in years.",
+  },
+  {
+    image: "assets/prologue/05-estate-drive.jpg",
+    alt: "A shadowed estate drive disappearing into the forest.",
+    text: "Beyond it, the house stood silent among the trees.",
+  },
+];
+
+const prologueDuration = 5000;
+let prologueIndex = 0;
+let prologueTimer;
+
+function showPrologueSlide() {
+  const slide = prologueSlides[prologueIndex];
+  const prologue = $("#opening-prologue");
+
+  prologue.style.setProperty("--slide-image", `url("${slide.image}")`);
+  prologue.setAttribute("aria-label", slide.alt);
+
+  $("#prologue-step").textContent =
+    `${prologueIndex + 1} / ${prologueSlides.length}`;
+  $("#prologue-text").textContent = slide.text;
+
+  prologue.classList.remove("slide-enter");
+  void prologue.offsetWidth;
+  prologue.classList.add("slide-enter");
+
+  prologueTimer = window.setTimeout(advancePrologue, prologueDuration);
+}
+
+function advancePrologue() {
+  prologueIndex += 1;
+
+  if (prologueIndex === prologueSlides.length) {
+    finishPrologue();
+    return;
+  }
+
+  showPrologueSlide();
+}
+
+function finishPrologue() {
+  window.clearTimeout(prologueTimer);
+  $("#opening-prologue").classList.add("hidden");
+}
+function hasClues(required) {
+  return required.every((clue) => state.collected.has(clue));
+}
+function startPrologue() {
+  window.clearTimeout(prologueTimer);
+
+  prologueIndex = 0;
+  $("#opening-prologue").classList.remove("hidden");
+
+  showPrologueSlide();
+}
 const clues = {
   ledger: {
     title: "Porter's ledger",
@@ -99,82 +175,7 @@ const suspects = {
 
 const state = { collected: new Set(), currentRoom: "lobby", currentSuspect: null, asked: new Set() };
 const $ = (selector) => document.querySelector(selector);
-const prologueSlides = [
-  {
-    image: "assets/prologue/01-forest-road.jpg",
-    alt: "A car traveling along a forest road at dusk.",
-    text: "By the time the road left the last town behind, evening had already settled in.",
-  },
-  {
-    image: "assets/prologue/02-darkening-trees.jpg",
-    alt: "Headlights cutting through dense trees in the dark.",
-    text: "The forest closed around the road, and the miles began to lose their meaning.",
-  },
-  {
-    image: "assets/prologue/03-estate-sign.jpg",
-    alt: "An old sign marking the entrance to a private estate.",
-    text: "When the light finally failed, an unfamiliar name appeared through the rain.",
-  },
-  {
-    image: "assets/prologue/04-front-gate.jpg",
-    alt: "A rusted gate at the entrance to an abandoned estate.",
-    text: "The road ended at a gate that had not opened for anyone in years.",
-  },
-  {
-    image: "assets/prologue/05-estate-drive.jpg",
-    alt: "A shadowed estate drive disappearing into the forest.",
-    text: "Beyond it, the house stood silent among the trees.",
-  },
-];
 
-const prologueDuration = 5000;
-let prologueIndex = 0;
-let prologueTimer;
-
-function showPrologueSlide() {
-  const slide = prologueSlides[prologueIndex];
-  const prologue = $("#opening-prologue");
-
-  prologue.style.setProperty("--slide-image", `url("${slide.image}")`);
-  prologue.setAttribute("aria-label", slide.alt);
-
-  $("#prologue-step").textContent =
-    `${prologueIndex + 1} / ${prologueSlides.length}`;
-  $("#prologue-text").textContent = slide.text;
-
-  prologue.classList.remove("slide-enter");
-  void prologue.offsetWidth;
-  prologue.classList.add("slide-enter");
-
-  prologueTimer = window.setTimeout(advancePrologue, prologueDuration);
-}
-
-function advancePrologue() {
-  prologueIndex += 1;
-
-  if (prologueIndex === prologueSlides.length) {
-    finishPrologue();
-    return;
-  }
-
-  showPrologueSlide();
-}
-
-function finishPrologue() {
-  window.clearTimeout(prologueTimer);
-  $("#opening-prologue").classList.add("hidden");
-}
-function hasClues(required) {
-  return required.every((clue) => state.collected.has(clue));
-}
-function startPrologue() {
-  window.clearTimeout(prologueTimer);
-
-  prologueIndex = 0;
-  $("#opening-prologue").classList.remove("hidden");
-
-  showPrologueSlide();
-}
 function renderRoom(roomKey) {
   state.currentRoom = roomKey;
   const room = rooms[roomKey];
@@ -317,6 +318,6 @@ document.querySelectorAll(".room").forEach((button) => button.addEventListener("
 document.querySelectorAll("[data-close]").forEach((button) => button.addEventListener("click", () => closeOverlay(button.dataset.close)));
 $("#restart-game").addEventListener("click", restart);
 $("#replay-prologue").addEventListener("click", startPrologue);
-
 $("#skip-prologue").addEventListener("click", finishPrologue);
+
 startPrologue();
