@@ -62,7 +62,7 @@ const suspects = {
     intro: "Mr. Wren worries a ring of keys in his palm. “I saw no one leave, detective. The storm saw to that.”",
     questions: [
       { text: "Why is a service entry missing from your ledger?", need: ["ledger"], reply: "“Because Mr. Vale paid me to forget it. Someone used the cellar passage at 11:15. I assumed it was the owner.”" },
-      { text: "Who had a reason to fear Edmund Vale?", need: [], reply: "“All of them, perhaps. But Mr. Vale was blackmailing the hotel. He kept records of every old sin.”" },
+      { text: "Who had a reason to fear Edmund Vale?", need: [], reply: "“All of them, perhaps. But Mr. Vale was blackmailing the mansion. He kept records of every old sin.”" },
     ],
   },
   medium: {
@@ -87,9 +87,9 @@ const suspects = {
   },
   owner: {
     name: "Alistair Vale",
-    role: "Owner of the Grand Pelican",
+    role: "Owner of the Saltwater Mansion",
     portrait: "♛",
-    intro: "Alistair Vale stands perfectly still beneath the portrait of his drowned brother. “This hotel is my family’s grave. Do not make it yours.”",
+    intro: "Alistair Vale stands perfectly still beneath the portrait of his drowned brother. “This mansion is my family’s grave. Do not make it yours.”",
     questions: [
       { text: "How did your cufflink reach the cellar?", need: ["cufflink"], reply: "“I lost it days ago.” His hand closes over its matching twin. “You have no proof I went below tonight.”" },
       { text: "What happened at Blackwater?", need: ["tarot", "cufflink"], reply: "“Edmund was going to expose me. My brother did not drown by accident. I held him under the water, and Edmund saw.”" },
@@ -138,7 +138,7 @@ function renderBoard() {
   $("#progress-fill").style.width = `${found * 20}%`;
   $("#progress-text").textContent = `${found} of 5 key clues recovered`;
   $("#theory-text").textContent = found < 3
-    ? "The storm has scattered the truth across the hotel."
+    ? "The storm has scattered the truth across the mansion."
     : found < 5
       ? "Someone used the sea-wall passage. The owner’s story is coming apart."
       : "Vale borrowed March's cape, used the passage at low tide, and tried to erase the proof of Blackwater.";
@@ -206,7 +206,7 @@ function resolveAccusation(key) {
   closeOverlay("accusation");
   if (key === "owner") {
     $("#ending-title").textContent = "The sea gives up its dead";
-    $("#ending-copy").textContent = "Alistair Vale used Lucien's cape to cross the hotel unseen, lured Edmund through the cellar at low tide, and sent him into the black water beyond the sea wall. By dawn, the storm has broken. So has the last lie in the Grand Pelican.";
+    $("#ending-copy").textContent = "Alistair Vale used Lucien's cape to cross the mansion unseen, lured Edmund through the cellar at low tide, and sent him into the black water beyond the sea wall. By dawn, the storm has broken. So has the last lie in the Saltwater Mansion.";
   } else {
     $("#ending-title").textContent = "A shadow, not the truth";
     $("#ending-copy").textContent = "The accusation does not hold. In the roar of the storm, Alistair Vale watches you leave with the quiet relief of a man who has survived another night. The Blue Room remains locked.";
@@ -222,12 +222,12 @@ function restart() {
 }
 
 function showCurrentScreen() {
-  const isInHotel = window.location.hash === "#hotel";
+  const isInMansion = window.location.hash === "#mansion";
 
-  $("#title-screen").classList.toggle("hidden", isInHotel);
-  $("#game-screen").classList.toggle("hidden", !isInHotel);
+  $("#title-screen").classList.toggle("hidden", isInMansion);
+  $("#game-screen").classList.toggle("hidden", !isInMansion);
 
-  if (isInHotel) {
+  if (isInMansion) {
     renderRoom("lobby");
     renderBoard();
     renderSuspects();
@@ -236,7 +236,7 @@ function showCurrentScreen() {
 }
 
 $("#start-game").addEventListener("click", () => {
-  window.location.hash = "hotel";
+  window.location.hash = "mansion";
 });
 
 window.addEventListener("hashchange", showCurrentScreen);

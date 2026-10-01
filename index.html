@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Saltwater Shadows, a Victorian seaside hotel mystery."
+      content="Saltwater Shadows, a Victorian seaside mansion mystery."
     />
     <title>Saltwater Shadows</title>
     <link rel="stylesheet" href="styles.css" />
@@ -14,20 +14,23 @@
     <main id="game">
       <section id="title-screen" class="screen title-screen">
         <div class="rain" aria-hidden="true"></div>
+        <img
+          class="title-background"
+          src="images/misty-gate.jpg"
+          alt=""
+          aria-hidden="true"
+        />
         <div class="title-copy">
-          <p class="eyebrow">A mystery at the Grand Pelican Hotel</p>
+          <p class="eyebrow">A mystery at the Saltwater Mansion</p>
           <h1>Saltwater<br /><em>Shadows</em></h1>
           <div class="title-actions">
-            <button id="start-game" class="primary-button">Enter the Hotel</button>
+            <button id="start-game" class="primary-button">Enter</button>
             <button id="how-to-play-button" class="primary-button menu-button" type="button">
               How to play
             </button>
-            <button id="options-button" class="primary-button menu-button" type="button">
-              Options
-            </button>
           </div>
         </div>
-        <p class="hotel-sign">THE GRAND PELICAN HOTEL<br /></p>
+        <p class="mansion-sign">THE SALTWATER MANSION<br /></p>
       </section>
 
       <section id="game-screen" class="screen game-screen hidden">
@@ -40,11 +43,11 @@
         </header>
 
         <section class="story-bar">
-          <p id="objective">Search the hotel. The murderer is still inside.</p>
+          <p id="objective">Search the mansion. The murderer is still inside.</p>
           <button id="case-board-button" class="ghost-button">Case board <span id="clue-count">0/5</span></button>
         </section>
 
-        <section class="hotel-layout" aria-label="Grand Pelican Hotel map">
+        <section class="mansion-layout" aria-label="Saltwater Mansion map">
           <button class="room room-lobby active" data-room="lobby">
             <span class="room-number">01</span><strong>Grand Lobby</strong><small>Rain at the doors</small>
           </button>
@@ -60,7 +63,7 @@
           <button class="room room-cellar" data-room="cellar">
             <span class="room-number">05</span><strong>Wine Cellar</strong><small>Below the sea wall</small>
           </button>
-          <div class="map-label">THE GRAND PELICAN</div>
+          <div class="map-label">THE Saltwater Mansion</div>
         </section>
 
         <section class="room-panel">

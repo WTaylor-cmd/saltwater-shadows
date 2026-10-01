@@ -13,8 +13,13 @@
 body { margin: 0; min-width: 320px; background: var(--night); color: var(--foam); font-family: Georgia, "Times New Roman", serif; }
 button { cursor: pointer; }
 @font-face {
-  font-family: "Hotel Calligraphy";
+  font-family: "exmouth";
   src: url("fonts/exmouth_.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Saint-Andrews Queen";
+  src: url("fonts/Saint-Andrews Queen.ttf") format("truetype");
   font-display: swap;
 }
 .hidden { display: none !important; }
@@ -35,6 +40,7 @@ button { cursor: pointer; }
 .title-screen::before {
   content: "";
   position: absolute;
+  z-index: 1;
   inset: 0;
   opacity: 0.38;
   background:
@@ -46,6 +52,19 @@ button { cursor: pointer; }
       transparent 31px 72px
     );
   animation: rain 1.4s linear infinite;
+  pointer-events: none;
+}
+.title-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.7;
+  filter: saturate(0.65) contrast(1.15) brightness(0.62);
+  pointer-events: none;
 }
 @keyframes rain { to { background-position: 0 0, 0 100px; } }
 .title-copy {
@@ -63,7 +82,7 @@ button { cursor: pointer; }
 }
 .eyebrow {
   margin: 0;
-  color: var(--gold);
+  color: #8B4D57;
   font-family: "Snell Roundhand", cursive;
   font-size: 0.69rem;
   font-weight: 700;
@@ -78,11 +97,11 @@ h1 { margin-bottom: 1.25rem;
   letter-spacing: -.07em;
   line-height: .75;
   text-shadow: 0 5px 25px #000; }
-h1 em { color: var(--gold); font-weight: ; }
+h1 em { color: #8A6A2C; font-weight: normal; }
 .prologue { max-width: 480px; margin: 0 auto 2rem; color: #d6ddda; font-size: 1.13rem; line-height: 1.6; }
 .primary-button {
   font-family: "Centaur Now Display", Georgia, "Times New Roman", serif;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: .1;
   color: #101827;
   background: linear-gradient(135deg, #ffd54a, #ff8a1f);
@@ -106,10 +125,10 @@ h1 em { color: var(--gold); font-weight: ; }
   transform: scale(1.02);
 }
 .primary-button, .ghost-button {
-  border: 1px solid var(--gold);
+  border: .05px solid;
   padding: .8rem 1.2rem;
-  color: #171622;
-  background: var(--gold);
+  color: #F7EDCF;
+  background: #29384A;
   font-weight: bold;
   transition: .2s;
 }
@@ -129,14 +148,15 @@ h1 em { color: var(--gold); font-weight: ; }
 .menu-button {
   width: clamp(170px, 25vw, 280px);
   min-height: 55px;
-  padding: 0.5rem 0.8rem;
+  padding: 0.8rem 1.2rem;
   font-size: 1.3rem;
+  font-family: "Centaur Now Display", Georgia, "Times New Roman", serif;
   line-height: 1;
   border-radius: 999px;
 }
 .controls { margin-top: 1rem; color: #adbbb9; font-size: .85rem; }
-.hotel-sign { position: absolute; right: 3%; bottom: 5%; color: #b38c54; font-size: .75rem; letter-spacing: .22em; line-height: 1.7; text-align: center; transform: rotate(-3deg); }
-.hotel-sign span { font-size: .57rem; }
+.mansion-sign { position: absolute; left: 3%; bottom: 5%; color: #b38c54; font-size: .75rem; letter-spacing: .22em; line-height: 1.7; text-align: center; transform: rotate(-3deg); }
+.mansion-sign span { font-size: .57rem; }
 
 .game-screen { position: relative;
   max-width: 1400px;
@@ -154,8 +174,8 @@ h1 em { color: var(--gold); font-weight: ; }
 .ghost-button { padding: .45rem .7rem; color: var(--foam); background: transparent; font-size: .78rem; }
 .ghost-button span { color: var(--gold); margin-left: .5rem; }
 
-.hotel-layout { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 140px 140px; gap: 9px; padding: 32px 10px 10px; border: 1px solid #53606a; background: #0b121a; }
-.hotel-layout::before { content: ""; position: absolute; top: 0; left: 16%; width: 68%; height: 29px; border: 1px solid #53606a; border-bottom: 0; }
+.mansion-layout { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 140px 140px; gap: 9px; padding: 32px 10px 10px; border: 1px solid #53606a; background: #0b121a; }
+.mansion-layout::before { content: ""; position: absolute; top: 0; left: 16%; width: 68%; height: 29px; border: 1px solid #53606a; border-bottom: 0; }
 .map-label { position: absolute; top: 8px; left: 0; right: 0; color: #627078; font-family: Arial, sans-serif; font-size: .58rem; letter-spacing: .2em; text-align: center; }
 .room { position: relative; display: flex; flex-direction: column; justify-content: end; min-height: 100px; padding: 1rem; border: 1px solid #344953; color: #e1dfd2; background: radial-gradient(circle at 70% 25%, #48606a, #17232c 55%, #101722); text-align: left; transition: .2s; }
 .room:hover, .room.active { border-color: var(--gold); background: radial-gradient(circle at 70% 25%, #687a72, #28373b 58%, #18222b); }
@@ -186,4 +206,4 @@ h1 em { color: var(--gold); font-weight: ; }
 .progress-track { height: 8px; margin-top: 1rem; background: #b5a581; }.progress-track span { display: block; height: 100%; background: var(--rust); transition: width .3s; }.muted { color: #766b5c; font-size: .82rem !important; }
 .portrait-mark { float: right; margin: -3.6rem 0 1rem 1rem; color: #805531; font-size: 3rem; }.dialogue { min-height: 85px; padding: 1rem; background: #d7c7a4; font-style: italic; line-height: 1.5; }.question-list { display: grid; gap: .6rem; margin-top: 1rem; }.question-button { padding: .75rem; border: 1px solid #94764e; color: #30271f; background: #e9ddc2; text-align: left; }.question-button:hover { background: #f5e9ce; }.question-button:disabled { opacity: .52; cursor: default; }
 .accusation-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }.accuse-button { padding: 1rem; border: 1px solid #896841; color: #2c2118; background: #dac9a8; text-align: left; }.accuse-button:hover { background: #ead9b9; }.accuse-button strong { display: block; font-size: 1.1rem; }.ending-card { text-align: center; }.ending-card h2 { color: var(--rust); }.ending-card p { line-height: 1.6; }
-@media (max-width: 650px) { .weather { display: none; }.hotel-layout { grid-template-columns: 1fr 1fr; }.room-stage { grid-column: 2; grid-row: 1 / 3; }.room-lobby { grid-column: 1; }.room-salon { grid-column: 1; }.room-blue { grid-column: 1; }.room-cellar { grid-column: 2; }.board-grid { grid-template-columns: 1fr; }.accusation-options { grid-template-columns: 1fr; }.story-bar { align-items: flex-start; flex-direction: column; } }
+@media (max-width: 650px) { .weather { display: none; }.mansion-layout { grid-template-columns: 1fr 1fr; }.room-stage { grid-column: 2; grid-row: 1 / 3; }.room-lobby { grid-column: 1; }.room-salon { grid-column: 1; }.room-blue { grid-column: 1; }.room-cellar { grid-column: 2; }.board-grid { grid-template-columns: 1fr; }.accusation-options { grid-template-columns: 1fr; }.story-bar { align-items: flex-start; flex-direction: column; } }
