@@ -1,28 +1,34 @@
 const prologueSlides = [
   {
-    image: "assets/prologue/01-forest-road.jpg",
-    alt: "A car traveling along a forest road at dusk.",
-    text: "By the time the road left the last town behind, evening had already settled in.",
+    image: "images/prologue/sunset-1.jpg",
+    alt: "One Last Delivery",
+    text: "You have one last delivery to make. Who even needs a delivery this late at night? " +
+        "You glance at the instructions again: A gratuity awaits you. —The Butler",
   },
   {
-    image: "assets/prologue/02-darkening-trees.jpg",
+    image: "images/prologue/NighttimeRoad-2.jpg",
     alt: "Headlights cutting through dense trees in the dark.",
-    text: "The forest closed around the road, and the miles began to lose their meaning.",
+    text: "The road gets darker and foggier. You must be there soon",
   },
   {
-    image: "assets/prologue/03-estate-sign.jpg",
+    image: "images/prologue/NighttimeRoad-3.jpg",
     alt: "An old sign marking the entrance to a private estate.",
-    text: "When the light finally failed, an unfamiliar name appeared through the rain.",
+    text: "You grow tired and can barely see through the fog in front of you.",
   },
   {
-    image: "assets/prologue/04-front-gate.jpg",
-    alt: "A rusted gate at the entrance to an abandoned estate.",
-    text: "The road ended at a gate that had not opened for anyone in years.",
+    image: "images/prologue/NighttimeRoad-4.jpg",
+    alt: "Longing for life",
+    text: "Surely, there will be sign of life soon. Maybe they can offer you a place to sleep for the night.",
   },
   {
-    image: "assets/prologue/05-estate-drive.jpg",
-    alt: "A shadowed estate drive disappearing into the forest.",
-    text: "Beyond it, the house stood silent among the trees.",
+    image: "images/prologue/Roadturnoff-5.jpg",
+    alt: "Finally there's hope.",
+    text: "You turn off on a path that appears to have once been a driveway.",
+  },
+    {
+    image: "images/prologue/mistygate-6.jpg",
+    alt: "A Gate Appears",
+    text: "A gate appears. ",
   },
 ];
 
@@ -32,14 +38,14 @@ let prologueTimer;
 
 function showPrologueSlide() {
   const slide = prologueSlides[prologueIndex];
-  const prologue = $("#opening-prologue");
+  const prologue = document.querySelector("#opening-prologue");
 
   prologue.style.setProperty("--slide-image", `url("${slide.image}")`);
   prologue.setAttribute("aria-label", slide.alt);
 
-  $("#prologue-step").textContent =
+  document.querySelector("#prologue-step").textContent =
     `${prologueIndex + 1} / ${prologueSlides.length}`;
-  $("#prologue-text").textContent = slide.text;
+  document.querySelector("#prologue-text").textContent = slide.text;
 
   prologue.classList.remove("slide-enter");
   void prologue.offsetWidth;
@@ -61,11 +67,10 @@ function advancePrologue() {
 
 function finishPrologue() {
   window.clearTimeout(prologueTimer);
-  $("#opening-prologue").classList.add("hidden");
+  document.querySelector("#opening-prologue").classList.add("hidden");
+  document.querySelector("#title-screen").focus();
 }
-function hasClues(required) {
-  return required.every((clue) => state.collected.has(clue));
-}
+
 function startPrologue() {
   window.clearTimeout(prologueTimer);
 
@@ -74,6 +79,7 @@ function startPrologue() {
 
   showPrologueSlide();
 }
+
 const clues = {
   ledger: {
     title: "Porter's ledger",
@@ -175,6 +181,10 @@ const suspects = {
 
 const state = { collected: new Set(), currentRoom: "lobby", currentSuspect: null, asked: new Set() };
 const $ = (selector) => document.querySelector(selector);
+
+function hasClues(required) {
+  return required.every((clue) => state.collected.has(clue));
+}
 
 function renderRoom(roomKey) {
   state.currentRoom = roomKey;
@@ -317,7 +327,6 @@ $("#case-board-button").addEventListener("click", () => openOverlay("case-board"
 document.querySelectorAll(".room").forEach((button) => button.addEventListener("click", () => renderRoom(button.dataset.room)));
 document.querySelectorAll("[data-close]").forEach((button) => button.addEventListener("click", () => closeOverlay(button.dataset.close)));
 $("#restart-game").addEventListener("click", restart);
+document.querySelector("#skip-prologue").addEventListener("click", finishPrologue);
 $("#replay-prologue").addEventListener("click", startPrologue);
-$("#skip-prologue").addEventListener("click", finishPrologue);
-
 startPrologue();
