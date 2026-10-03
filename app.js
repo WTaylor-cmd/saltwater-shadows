@@ -1,87 +1,129 @@
 const prologueSlides = [
   {
-    image: "images/prologue/sunset-1.jpg",
+    image: "images/prologue/sunsetincar.jpg",
     thought:
       "Last delivery of the day. \n\n" +
-      "Thank God, because you could really use a beer and a foot rub about now. \n\n" +
-      "Of course the boss told you to take the delivery. \n\n He does not like you much. \n\n" +
-      "Something about needing improvement. Who knows. \n\n" +
-      "You would quit, but the pizza days are keeping you there.",
+      "Thank god, because you could really use a beer and a foot rub about now. \n\n" +
+      "Of course the boss voluntold you to take the late night delivery. \n\n " +
+      "He doesn't seem to like you much. \n\n" +
+      "Something about (needing improvement). Who knows. \n\n" +
+      "You would quit, but the pizza fridays are keeping you there.",
   },
   {
-    image: "images/prologue/NighttimeRoad-2.jpg",
+    image: "images/prologue/roadincar.jpg",
+    thoughtBefore: "You glance at the delivery instructions again.",
     instruction:
-      "A gratuity awaits you, when you reach the point of precipice. —The Butler",
-    thought:
+      "A gratuity awaits you when you reach the point of precipice. —The Butler",
+    thoughtAfter:
       "So odd. Who talks like that? \n\n" +
-        "You would have taken this delivery \n" +
-        "whether it was forced on you or not. \n\n" +
-        "You like adventure.",
-
+      "You would have taken this delivery \n" +
+      "whether it was forced on you or not. \n\n" +
+      "You like adventure.",
   },
   {
-    image: "images/prologue/NighttimeRoad-3.jpg",
+    image: "images/prologue/roadincar1.jpg",
     thought:
         "The dark and fog start setting in. \n\n" +
         "Spooky"
   },
   {
-    image: "images/prologue/NighttimeRoad-4.jpg",
+    image: "images/prologue/roadincar2.jpg",
     thought:
       "Thoughts of turning around and saying you tried,\n" +
-        "swirl through your mind.\n\n" +
-        "You could open the package yourself. \n\n" +
-        "It has to be something cool.",
+      "swirl through your mind.\n\n" +
+      "You could take it home and open the package yourself. \n\n" +
+      "It has to be something cool.",
   },
   {
-    image: "images/prologue/Roadturnoff-5.jpg",
+    image: "images/prologue/turnincar.jpg",
     thought:
-      "A turn appears and you make a sharp left, \n" +
-      "only to be met with a wall of fog. \n\n" +
-      "As you drive forward, a large gate appears before you. \n\n" +
-      "Ominous and impressive.",
+      "A turn appears through the trees. \n\n" +
+      "This must be it. \n\n" +
+      "I guess we won't know what is in the package after all.",
+  },
+  {
+    image: "images/prologue/fogincar.jpg",
+    thought:
+      "The fog overwhelms you. \n\n" +
+      "The road feels now like just a suggestion.",
+  },
+  {
+    image: "images/prologue/gateincar.jpg",
+    thought:
+      "Then something takes shape in the mist. \n\n" +
+      "A gate. Large, iron, and far too dramatic to belong to anyone normal.",
   },
 ];
 
-const prologueDuration = 14000;
+const prologueDuration = 2000;
+const thoughtTypingSpeed = 90;
+const instructionPause = 3000;
+
 let prologueIndex = 0;
 let prologueTimer;
+let typingTimer;
 
 function showPrologueSlide() {
   const slide = prologueSlides[prologueIndex];
   const prologue = document.querySelector("#opening-prologue");
+  const thoughtBefore = document.querySelector("#prologue-thought-before");
+  const instruction = document.querySelector("#prologue-instruction");
+  const thoughtAfter = document.querySelector("#prologue-thought-after");
+
+  window.clearTimeout(prologueTimer);
+  window.clearTimeout(typingTimer);
 
   prologue.style.setProperty("--slide-image", `url("${slide.image}")`);
-  prologue.setAttribute("aria-label", slide.alt);
 
   document.querySelector("#prologue-step").textContent =
     `${prologueIndex + 1} / ${prologueSlides.length}`;
-  typeThought(slide.thought, () => {
-  prologueTimer = window.setTimeout(advancePrologue, prologueDuration);
-  });
 
-  const thoughtTypingSpeed = 22;
-  let typingTimer;
+  thoughtBefore.textContent = "";
+  thoughtAfter.textContent = "";
+  thoughtAfter.classList.add("hidden");
 
-  const instruction = document.querySelector("#prologue-instruction");
-  instruction.textContent = slide.instruction ?? "";
-  instruction.classList.toggle("hidden", !slide.instruction);
+  instruction.textContent = "";
+  instruction.classList.add("hidden");
 
   prologue.classList.remove("slide-enter");
   void prologue.offsetWidth;
   prologue.classList.add("slide-enter");
+
+  const firstThought = slide.thoughtBefore ?? slide.thought;
+
+  typeThought(thoughtBefore, firstThought, () => {
+    if (!slide.instruction) {
+      scheduleNextSlide();
+      return;
+    }
+
+    instruction.textContent = slide.instruction;
+    instruction.classList.remove("hidden");
+
+    typingTimer = window.setTimeout(() => {
+      if (slide.thoughtAfter) {
+        thoughtAfter.classList.remove("hidden");
+        typeThought(thoughtAfter, slide.thoughtAfter, scheduleNextSlide);
+        return;
+      }
+
+      scheduleNextSlide();
+    }, instructionPause);
+  });
 }
 
-function typeThought(text, onComplete) {
-  const thought = document.querySelector("#prologue-thought");
+function scheduleNextSlide() {
+  prologueTimer = window.setTimeout(advancePrologue, prologueDuration);
+}
 
+function typeThought(element, text, onComplete) {
   window.clearTimeout(typingTimer);
-  thought.textContent = "";
 
+  element.textContent = "";
   let characterIndex = 0;
 
   function writeNextCharacter() {
-    thought.textContent += text[characterIndex];
+    element.textContent += text[characterIndex];
     characterIndex += 1;
 
     if (characterIndex < text.length) {
@@ -115,6 +157,7 @@ function finishPrologue() {
 
 function startPrologue() {
   window.clearTimeout(prologueTimer);
+  window.clearTimeout(typingTimer);
 
   prologueIndex = 0;
   $("#opening-prologue").classList.remove("hidden");
@@ -339,20 +382,21 @@ function resolveAccusation(key) {
 }
 
 function restart() {
-  state.collected.clear(); state.asked.clear(); state.currentRoom = "lobby";
+  state.collected.clear();
+  state.asked.clear();
+  state.currentRoom = "lobby";
   closeOverlay("ending");
-  $("#game-screen").classList.add("hidden");
-  $("#title-screen").classList.remove("hidden");
+  window.location.hash = "title";
 }
 
 function showCurrentScreen() {
-  const isInMansion = window.location.hash === "#mansion";
+  const isInmansion = window.location.hash === "#mansion";
 
-  $("#title-screen").classList.toggle("hidden", isInMansion);
-  $("#game-screen").classList.toggle("hidden", !isInMansion);
+  $("#title-screen").classList.toggle("hidden", isInmansion);
+  $("#game-screen").classList.toggle("hidden", !isInmansion);
 
-  if (isInMansion) {
-    renderRoom("lobby");
+  if (isInmansion) {
+    renderRoom(state.currentRoom);
     renderBoard();
     renderSuspects();
     renderAccusations();
@@ -363,12 +407,24 @@ $("#start-game").addEventListener("click", () => {
   window.location.hash = "mansion";
 });
 
-window.addEventListener("hashchange", showCurrentScreen);
-showCurrentScreen();
 $("#case-board-button").addEventListener("click", () => openOverlay("case-board"));
+document.querySelector("#opening-prologue").addEventListener("click", (event) => {
+  if (event.target.closest("button")) {
+    return;
+  }
+
+  advancePrologue();
+});
 document.querySelectorAll(".room").forEach((button) => button.addEventListener("click", () => renderRoom(button.dataset.room)));
 document.querySelectorAll("[data-close]").forEach((button) => button.addEventListener("click", () => closeOverlay(button.dataset.close)));
 $("#restart-game").addEventListener("click", restart);
 document.querySelector("#skip-prologue").addEventListener("click", finishPrologue);
 $("#replay-prologue").addEventListener("click", startPrologue);
-startPrologue();
+
+window.addEventListener("hashchange", showCurrentScreen);
+showCurrentScreen();
+if (window.location.hash === "#mansion") {
+  document.querySelector("#opening-prologue").classList.add("hidden");
+} else {
+  startPrologue();
+}
