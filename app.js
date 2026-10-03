@@ -1,38 +1,49 @@
 const prologueSlides = [
   {
     image: "images/prologue/sunset-1.jpg",
-    alt: "One Last Delivery",
-    text: "You have one last delivery to make. Who even needs a delivery this late at night? " +
-        "You glance at the instructions again: A gratuity awaits you. —The Butler",
+    thought:
+      "Last delivery of the day. \n\n" +
+      "Thank God, because you could really use a beer and a foot rub about now. \n\n" +
+      "Of course the boss told you to take the delivery. \n\n He does not like you much. \n\n" +
+      "Something about needing improvement. Who knows. \n\n" +
+      "You would quit, but the pizza days are keeping you there.",
   },
   {
     image: "images/prologue/NighttimeRoad-2.jpg",
-    alt: "Headlights cutting through dense trees in the dark.",
-    text: "The road gets darker and foggier. You must be there soon",
+    instruction:
+      "A gratuity awaits you, when you reach the point of precipice. —The Butler",
+    thought:
+      "So odd. Who talks like that? \n\n" +
+        "You would have taken this delivery \n" +
+        "whether it was forced on you or not. \n\n" +
+        "You like adventure.",
+
   },
   {
     image: "images/prologue/NighttimeRoad-3.jpg",
-    alt: "An old sign marking the entrance to a private estate.",
-    text: "You grow tired and can barely see through the fog in front of you.",
+    thought:
+        "The dark and fog start setting in. \n\n" +
+        "Spooky"
   },
   {
     image: "images/prologue/NighttimeRoad-4.jpg",
-    alt: "Longing for life",
-    text: "Surely, there will be sign of life soon. Maybe they can offer you a place to sleep for the night.",
+    thought:
+      "Thoughts of turning around and saying you tried,\n" +
+        "swirl through your mind.\n\n" +
+        "You could open the package yourself. \n\n" +
+        "It has to be something cool.",
   },
   {
     image: "images/prologue/Roadturnoff-5.jpg",
-    alt: "Finally there's hope.",
-    text: "You turn off on a path that appears to have once been a driveway.",
-  },
-    {
-    image: "images/prologue/mistygate-6.jpg",
-    alt: "A Gate Appears",
-    text: "A gate appears. ",
+    thought:
+      "A turn appears and you make a sharp left, \n" +
+      "only to be met with a wall of fog. \n\n" +
+      "As you drive forward, a large gate appears before you. \n\n" +
+      "Ominous and impressive.",
   },
 ];
 
-const prologueDuration = 5000;
+const prologueDuration = 14000;
 let prologueIndex = 0;
 let prologueTimer;
 
@@ -45,13 +56,43 @@ function showPrologueSlide() {
 
   document.querySelector("#prologue-step").textContent =
     `${prologueIndex + 1} / ${prologueSlides.length}`;
-  document.querySelector("#prologue-text").textContent = slide.text;
+  typeThought(slide.thought, () => {
+  prologueTimer = window.setTimeout(advancePrologue, prologueDuration);
+  });
+
+  const thoughtTypingSpeed = 22;
+  let typingTimer;
+
+  const instruction = document.querySelector("#prologue-instruction");
+  instruction.textContent = slide.instruction ?? "";
+  instruction.classList.toggle("hidden", !slide.instruction);
 
   prologue.classList.remove("slide-enter");
   void prologue.offsetWidth;
   prologue.classList.add("slide-enter");
+}
 
-  prologueTimer = window.setTimeout(advancePrologue, prologueDuration);
+function typeThought(text, onComplete) {
+  const thought = document.querySelector("#prologue-thought");
+
+  window.clearTimeout(typingTimer);
+  thought.textContent = "";
+
+  let characterIndex = 0;
+
+  function writeNextCharacter() {
+    thought.textContent += text[characterIndex];
+    characterIndex += 1;
+
+    if (characterIndex < text.length) {
+      typingTimer = window.setTimeout(writeNextCharacter, thoughtTypingSpeed);
+      return;
+    }
+
+    onComplete();
+  }
+
+  writeNextCharacter();
 }
 
 function advancePrologue() {
@@ -67,8 +108,9 @@ function advancePrologue() {
 
 function finishPrologue() {
   window.clearTimeout(prologueTimer);
+  window.clearTimeout(typingTimer);
+
   document.querySelector("#opening-prologue").classList.add("hidden");
-  document.querySelector("#title-screen").focus();
 }
 
 function startPrologue() {
